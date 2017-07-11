@@ -8,7 +8,8 @@ let config = {
 	entry: './app/index.js',
 	output: {
 		filename: 'bundle.js',
-		path: path.join(__dirname, 'dist')
+		path: path.join(__dirname, 'dist'),
+		publicPath: '/'
 	},
 	devServer: {
 		historyApiFallback: true
@@ -20,7 +21,16 @@ let config = {
 				test: /\.js$/,
 				use: 'babel-loader'
 			},
-			{ test: /\.css$/, use: ['style-loader', 'css-loader'] }
+			{
+				include: path.join(__dirname, 'app'),
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader']
+			},
+			{
+				include: path.join(__dirname, 'app'),
+				test: /\.svg$/,
+				use: 'file-loader'
+			}
 		]
 	},
 	plugins: [

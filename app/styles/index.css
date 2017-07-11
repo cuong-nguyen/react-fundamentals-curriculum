@@ -1,0 +1,36 @@
+body, html {
+	margin: 0;
+}
+
+.header {
+	background: rgba(252,90,44,.89);
+   color: #fff;
+   padding: 5px;
+	display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.landing {
+	background-image: url(../images/pattern.svg);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: #FFF;
+	background-size: cover;
+}
+
+.search {
+	display: flex;
+	justify-content: center;
+}
+
+.landing .search {
+	flex-direction: column;
+}
+
+.btn-success {
+	color: #fff;
+   background-color: #5cb85c;
+   border-color: #4cae4c;
+}
