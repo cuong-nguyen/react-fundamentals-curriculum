@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 let config = {
 	context: __dirname,
@@ -24,20 +25,32 @@ let config = {
 			{
 				include: path.join(__dirname, 'app'),
 				test: /\.css$/,
-				use: ['style-loader', 'css-loader']
-			},
-			{
-				include: path.join(__dirname, 'app'),
-				test: /\.svg$/,
-				use: 'file-loader'
+				use: [
+					'style-loader',
+					{
+						loader: 'css-loader',
+						options: {
+							url: false
+						}
+					}
+				]
 			}
+			// {
+			// 	include: path.join(__dirname, 'app'),
+			// 	test: /\.svg$/,
+			// 	use: 'file-loader?name=assets/[path][name].[ext]'
+			// }
 		]
 	},
 	plugins: [
 		new ProgressBarPlugin(),
 		new HtmlPlugin({
 			template: 'app/index.html'
-		})
+		}),
+		new CopyPlugin([
+			{ from: './app/images/weather-icons', to: './images/weather-icons' },
+			{ from: './app/images/*.svg', to: './images/[name].[ext]' }
+		])
 	]
 };
 

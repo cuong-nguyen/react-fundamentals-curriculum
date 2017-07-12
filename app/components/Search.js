@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
 
 class Search extends Component {
 	constructor(props, context) {
@@ -15,12 +16,16 @@ class Search extends Component {
 
 	onClick = () => {
 		const { history } = this.props;
-		history.push(`/forecast?city=${this.state.searchText}`);
+		let query = queryString.parse(history.location.search);
+		if (query.city !== this.state.searchText) {
+			history.push(`/forecast?city=${this.state.searchText}`);
+		}
+		this.setState({ searchText: '' });
 	}
 
 	render() {
 		const { searchText } = this.state;
-		const { placeholder } = this.props;
+		const { placeholder, onSearch } = this.props;
 
 		return (
 			<div className='search'>
@@ -29,9 +34,10 @@ class Search extends Component {
 					value={searchText}
 					placeholder={placeholder}
 					onChange={this.onChange}
+					className='form-control'
 				/>
 				<button
-					className='btn-success'
+					className='btn-success form-control'
 					disabled={!searchText}
 					onClick={this.onClick}>
 					Get Weather
